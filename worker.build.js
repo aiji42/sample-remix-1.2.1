@@ -1,20 +1,15 @@
 /* eslint @typescript-eslint/no-var-requires: 0 */
-require("dotenv").config()
 const alias = require("esbuild-plugin-alias")
 const isProd = process.env.NODE_ENV === "production"
 
 require("esbuild")
   .build({
-    entryPoints: ["./build/index.js"],
+    entryPoints: ["./server.js"],
     bundle: true,
     sourcemap: true,
     minify: isProd,
-    outdir: "dist",
-    define: {
-      "process.env.NODE_ENV": `"${process.env.NODE_ENV ?? "development"}"`,
-      "process.env.SUPABASE_URL": `"${process.env.SUPABASE_URL}"`,
-      "process.env.SUPABASE_API_KEY": `"${process.env.SUPABASE_API_KEY}"`,
-    },
+    outdir: "build",
+    define: {},
     plugins: [
       alias({
         through: require.resolve("no-op"),
